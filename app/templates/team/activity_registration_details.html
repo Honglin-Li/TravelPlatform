@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}报名明细{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+    <div class="col-sm-offset-1 col-sm-10">
+        <div class="page-header">
+        <h3>报名明细</h3>
+        </div>
+
+        <div>
+
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>序号</th>
+              <th>序列号</th>
+              <th>会员名</th>
+              <th>报名时间</th>
+              <th>选择方案</th>
+              <th>姓名</th>
+              <th>身份证号</th>
+              <th>联系电话</th>
+              <th>性别</th>
+              <th>年龄</th>
+              <th>省份</th>
+              <th>缴费状态</th>
+              <th>报名方式</th>
+              <th>报名团队</th>
+              <th>志愿者</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for item in contacts %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ item.serial_number }}</td>
+              <td><a href="{{ url_for('user.profile', id=item.user_id) }}">{{ item.username }}</a> </td>
+              <td>{{ moment(item.timestamp).format('L') }}</td>
+              <td>{{ item.solution }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.identity }}</td>
+              <td>{{ item.phone }}</td>
+              <td>{% if item.gender %}男{% else %}女{% endif %}</td>
+              <td>{{ item.age }}</td>
+              <td>{{ Province[item.province] }}</td>
+              <td>{% if item.state %}已缴费{% else %}未交费{% endif %}</td>
+              <td>{{ item.registration }}</td>
+              <td>{% if item.team_id %}
+              <a href="{{ url_for('team.team_index', id=item.team_id) }}">{{ item.team_name }}</a>
+              {% endif %}</td>
+              <td>{{ item.volunteer_name }}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        </div>
+    </div>
+    </div>
+
+
+{% endblock %}

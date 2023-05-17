@@ -1,0 +1,49 @@
+{% extends "admin_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros/_tools.html" as pager %}
+
+{% block admin_title %}
+需求列表
+{% endblock %}
+
+{% block admin_content %}
+
+<table class="table table-striped">
+  <caption>赞助商需求列表</caption>
+  <thead>
+    <tr>
+        <th>公司名称</th>
+        <th>联系人</th>
+        <th>联系电话</th>
+        <th>形象展示</th>
+        <th>品牌推广</th>
+        <th>产品销售</th>
+        <th>占领市场</th>
+        <th>其他需求</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in demands %}
+    <tr>
+        <td>{{ item.company }}</td>
+        <td>
+            {% if item.user_id %}
+                <a href="{{ url_for('user.profile',id=item.user_id) }}">{{ item.contact }}</a>
+            {% else %}
+                {{ item.contact }}
+            {% endif %}
+        </td>
+        <td>{{ item.phone }}</td>
+        <td>{{ item.image }}</td>
+        <td>{{ item.brand }}</td>
+        <td>{{ item.product }}</td>
+        <td>{{ item.market }}</td>
+        <td>{{ item.other }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+    {{ pager.render_pagination(pagination, 'admin.demands') }}
+{% endblock %}

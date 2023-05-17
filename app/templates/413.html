@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/homepage.css') }}" />
+{% endblock %}
+{% block title %}发生了413错误{% endblock %}
+
+
+{% block page_content %}
+    <div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+        <div class="page-header">
+        <h1>啊！！！您上传的照片太太太大了！服务器已经复核不了了！请压缩或者修改大小，使大小保持在1M以下再上传哦~</h1>
+            </div>
+    </div>
+    </div>
+{% endblock %}

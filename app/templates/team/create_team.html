@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}创建团队{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+    <div class="col-sm-offset-1 col-sm-10">
+         <div class="page-header">
+            <h1>
+                {% if team %}
+                编辑团队资料
+                {% else %}
+                申请团队
+                {% endif %}
+            </h1>
+         </div>
+        <div class="radio-list-inline">
+             {{ wtf.quick_form(form, button_map={'submit':'success'}) }}
+         </div>
+    </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,5 @@
+{% macro render_user_avatar(u) %}
+     <p><a href="{{ url_for('user.profile', id=u.id) }}" title="点击头像进入用户首页">
+        <img src="{{ u.avatar_url }}" title="用户头像" class="avatar"  />
+    </a> </p>
+{% endmacro %}

@@ -1,0 +1,101 @@
+{% macro render_activity_list_vertical(activities) %}
+<div class="list">
+<ul class="list-unstyled activity-list">
+    {% for activity in activities %}
+        <li class="activity-item thumbnail">
+            <div class="row">
+                <div class="col-sm-5">
+                    <a href="{{ url_for('team.activity', id=activity.id) }}">
+                        <img src="{{ activity.cover_url }}" alt="活动封面" />
+                    </a>
+                </div>
+                <div class="col-sm-7">
+                    {# 活动分类 #}
+                    <ul class="list-unstyled list-inline">
+                        {% for item in activity.types %}
+                            <li><a href="{{ url_for('team.team_list', id=item.id) }}" class="badge">
+                                {{ item.name }}
+                            </a> </li>
+                        {% endfor %}
+                    </ul>
+
+                    <h3><a href="{{ url_for('team.activity', id=activity.id) }}">{{ activity.name }}</a></h3>
+                    <div class="activity-details">
+                        <a class="team-icon" href="{{ url_for('team.team_index', id=activity.belong_to_team) }}">
+                            {{ activity.team.name }}
+                        </a>
+                        <div class="activity-date">
+                            {{ moment(activity.start_date).format('L') }}-
+                            {{ moment(activity.end_date).format('L') }}
+                        </div>
+                    </div>
+                    {% if activity.past %}
+                        <a href="#" class="btn btn-default">活动结束</a>
+                    {% else %}
+                        <a href="{{ url_for('team.activity', id=activity.id) }}" class="btn btn-warning">我要报名</a>
+                    {% endif %}
+                </div>
+            </div>
+        </li>
+    {% endfor %}
+</ul>
+</div>
+{% endmacro %}
+
+{% macro render_activity_list_horizontal(activities) %}
+<ul class="list-unstyled activity-list-horizontal">
+    {% for activity in activities %}
+        <li class="polaroid">
+        <a href="{{  url_for('team.activity', id=activity.id) }}">
+            <img src="{{ activity.cover_url }}" class="img-responsive"/>
+        </a>
+        <div class="polaroid-text">
+            <h3 class="activity-item card-square-title">{{ activity.name }}</h3>
+            <span class="highlight" >{{ moment(activity.start_date).format('L') }}</span>
+            从<span class="highlight" >{{ activity.rally_site }}</span>出发，
+                为期<span class="highlight" >{{ activity.days }}</span>天，价格
+            <span class="highlight" >{{ activity.price }}</span>元</div>
+        </li>
+        {% if not loop.index % 3  %}
+            <div class="clearfix"></div>
+        {% endif %}
+    {% endfor %}
+</ul>
+    <div class="clearfix"></div>
+{% endmacro %}
+
+{% macro render_activity(activity) %}
+        <div class="polaroid">
+        <a href="{{  url_for('team.activity', id=activity.id) }}">
+            <img src="{{ activity.cover_url }}" class="img-responsive"/>
+        </a>
+        <div class="polaroid-text">
+            <h3 class="activity-item card-square-title">{{ activity.name }}</h3>
+            <span class="highlight" >{{ moment(activity.start_date).format('L') }}</span>
+            从<span class="highlight" >{{ activity.rally_site }}</span>出发，
+                为期<span class="highlight" >{{ activity.days }}</span>天，价格
+            <span class="highlight" >{{ activity.price }}</span>元</div>
+        </div>
+{% endmacro %}
+
+{% macro render_activitys_team(activities, team_id) %}
+<ul class="list-unstyled activity-list-horizontal">
+    {% for activity in activities %}
+        <li class="thumbnail">
+        <a href="{{  url_for('team.activity_index_team', id=activity[0]) }}">
+            <img src="{{ activity[1].cover_url }}" class="img-responsive height-limit"/>
+            <h3 class="activity-item card-square-title">{{ activity[1].name }}</h3>
+
+        </a>
+        <p><span class="highlight" >{{ moment(activity[1].start_date).format('L') }}</span>
+            从<span class="highlight" >{{ activity[1].rally_site }}</span>出发，
+                为期<span class="highlight" >{{ activity[1].days }}</span>天，价格
+            <span class="highlight" >{{ activity[1].price }}</span>元</p>
+        </li>
+        {% if not loop.index % 3  %}
+            <div class="clearfix"></div>
+        {% endif %}
+    {% endfor %}
+</ul>
+    <div class="clearfix"></div>
+{% endmacro %}

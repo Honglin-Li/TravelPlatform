@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}管理活动方案{% endblock %}
+
+{# 使用说明
+    admin参数控制是否显示管理功能#}
+
+{% block page_content %}
+    <div class="row top-space">
+    <div class="col-sm-offset-2 col-sm-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">您可以选择添加编辑多个活动方案</h2>
+            </div>
+            <div class="panel-body">
+                <div>
+                <p><a href="{{ url_for('team.activity', id=activity.id) }}">如果您只有一个活动方案，点击这里</a>
+                进入您创建的活动主页</p>
+                 </div>
+                <div>
+                    <p>如果您有多个活动方案，可以在面板中编辑活动方案，多个活动方案的活动，会员在报名时需要选择参加的是哪个方案。</p>
+                </div>
+                {# 如果是团队管理员可以编辑 #}
+                {% if activity.team.is_admin(current_user) %}
+                {% set admin=True %}
+                {% endif %}
+                {% include 'include/_activity_solutions.html' %}
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+    $(document).ready(function(){
+        $(".edit-sln").click(function (event) {
+			$("#name").val($(this).parent().prev().prev().text());
+            $("#detail").val($(this).parent().prev().text());
+            $("#sln_id").val($(this).attr("id"));
+        });
+    });
+</script>
+{% endblock %}

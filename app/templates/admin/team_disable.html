@@ -1,0 +1,12 @@
+{% extends "admin_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros/_team_details_cube.html" as macros with context %}
+
+
+{% block admin_title %}
+被封号的俱乐部列表
+{% endblock %}
+
+{% block admin_content %}
+{{ macros.render_team_list_admin(teams) }}
+{% endblock %}

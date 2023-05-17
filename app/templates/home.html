@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros/_activity_list.html" as act_list %}
+{% import "macros/_team_details_cube.html" as team_macros %}
+{% import "macros/_activity_list.html" as act_macros with context %}
+{% block head %}
+{{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/homepage.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/team.css') }}" />
+{% endblock %}
+{% block title %}小猫游园--南太行户外运动俱乐部{% endblock %}
+
+
+{% block page_content %}
+{# 轮播 #}
+<div id="homepage-carousel" class="carousel slide">
+    <ol class="carousel-indicators">
+        <li class="active" data-target="#homepage-carousel" data-slide-to="0"></li>
+        <li data-target="#homepage-carousel" data-slide-to="1"></li>
+        <li data-target="#homepage-carousel" data-slide-to="2"></li>
+        <li data-target="#homepage-carousel" data-slide-to="3"></li>
+        <li data-target="#homepage-carousel" data-slide-to="4"></li>
+    </ol>
+
+    <div class="carousel-inner">
+        {% for item in carousel_items %}
+            <div class="item {% if loop.index == 1 %}active{% endif %}">
+                <a href="{{ url_for('team.activity', id=item.id) }}">
+                    <img src="{{ item.cover_url }}" alt="{{ item.name }}" class="img-carousel" />
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a class="left carousel-control" href="#homepage-carousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#homepage-carousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>
+{# 主内容块排版占10个gird #}
+
+ <div class="row">
+     <div class="col-sm-offset-1 col-sm-10">
+
+{# 选择活动分类 ----全布局#}
+
+    <h1 class="banner banner-long text-center text-border top-space">找活动</h1>
+    <div class="top-space">
+        {% set urlpoint = 'team.activities_search_with_outdoor' %}
+        {% include 'include/_outdoors_type_list.html' %}
+    </div>
+{# 属于南太行的最近的4个活动 #}
+   <div class="row top-space bottom-space">
+         <div class="banner-home">南太行的最新活动</div>
+         <div class="row">
+             {% for activity in activities %}
+                <div class="col-sm-3">
+                {{ act_macros.render_activity(activity) }}
+                </div>
+             {% endfor %}
+         </div>
+     </div>
+     {# 活跃俱乐部 #}
+     <div class="row top-space">
+         {# 属于南太行的最近的4个活动 #}
+         <div class="banner-home  bottom-space">活跃俱乐部</div>
+         <div class="row">
+             {{ team_macros.render_team_list_simple(teams) }}
+         </div>
+     </div>
+     </div>
+ </div>
+{# 景区 ---全布局#}
+     {# <h1 class="banner banner-long text-center text-border">景区</h1>
+     <div>这里是待填充的景区模块</div> #}
+
+{# 最新活动最新帖子 团队 论坛地接模块  --- 布局1-6-4-1#}
+
+
+{# 招商 #}
+<div class="fix-position">
+    <a href="{{ url_for('invest') }}" title="致赞助商的一封信"><span class="glyphicon glyphicon-envelope"> 招商</span> </a>
+</div>
+
+{% endblock %}

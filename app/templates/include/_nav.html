@@ -1,0 +1,53 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button aria-controls="navbar" aria-expanded="false"
+              class="navbar-toggle collapsed" data-target="#nav-items" data-toggle="collapse" type="button">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand">小猫游园</span>
+    </div>
+
+    <div class="navbar-collapse collapse" id="nav-items">
+      <ul class="nav navbar-nav">
+        <li>
+          <a href="{{ url_for('index') }}" title="主页">主页</a>
+        </li>
+        <li>
+          <a href="{{ url_for('team.activities_search_home') }}" title="活动">活动</a>
+        </li>
+        <li>
+          <a href="{{ url_for('team.teams_search_home') }}" title="团队">团队</a>
+        </li>
+        <li>
+            {% if current_user.is_leader %}
+                <a href="{{ url_for('team.team_me') }}" title="我的俱乐部">我的俱乐部</a>
+            {% else %}
+                <a href="{{ url_for('team.create_team') }}" title="申请俱乐部">申请俱乐部</a>
+            {% endif %}
+        </li>
+        <li>
+          <a href="{{ url_for('user.profile_me') }}" title="我的主页">我的主页</a>
+        </li>
+        <li>
+          <a href="{{ url_for('invest') }}" title="致赞助商的一封信"><b>致赞助商的一封信</b></a>
+        </li>
+      </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated %}
+             <li><a href="{{ url_for('auth.logout') }}"><span class="glyphicon glyphicon-log-out"></span> 注销</a></li>
+             <li><a href="{{ url_for('user.edit_profile') }}"><span class="glyphicon glyphicon-pencil"></span> 编辑</a></li>{% if current_user.is_admin %}<li class="text-center col-xs-2" style="font-size:20px;">
+                        <a href="{{ url_for('admin.index') }}" title="管理页面"><span class="glyphicon glyphicon-edit"/></a></li>
+            {% endif %}
+            {% else %}
+             <li><a href="{{ url_for('auth.register') }}"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+             <li><a href="{{ url_for('auth.login') }}"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            {% endif %}
+
+        </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/homepage.css') }}" />
+{% endblock %}
+{% block title %}发生了500错误{% endblock %}
+
+
+{% block page_content %}
+    <div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+        <div class="page-header">
+            <h1>啊哦！您的请求遇到了服务器内部错误~</h1>
+        </div>
+        <div>{{ e }}</div>
+    </div>
+    </div>
+{% endblock %}

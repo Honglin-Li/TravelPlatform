@@ -1,0 +1,21 @@
+{% extends "admin_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block admin_title %}
+管理主页
+{% endblock %}
+
+{% block admin_content %}
+    <p>请在右侧工具栏选择要管理的项目</p>
+    <p>网站基本维护功能</p>
+
+    <a href="{{ url_for('admin.show_contact') }}" class="btn btn-default">显示联系人信息</a>
+    <a href="{{ url_for('admin.team_vitality') }}" class="btn btn-default">初始化活跃度</a>
+
+
+    <a href="#" class="btn btn-default">清除弃用的用户头像</a>
+    <a href="#" class="btn btn-default">清除弃用的团队头像</a>
+    <a href="#" class="btn btn-default">清除弃用的活动封面</a>
+
+{% endblock %}

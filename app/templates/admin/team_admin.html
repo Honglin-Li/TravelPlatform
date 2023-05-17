@@ -1,0 +1,38 @@
+{% extends "admin_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block admin_title %}
+俱乐部管理详细页面
+{% endblock %}
+
+{% block admin_content %}
+
+    <div>俱乐部名：{{ team.name }}</div>
+    <div>创建时间：{{ team.timestamp }}</div>
+    <div>创建人： {{ team.created_by }}</div>
+    <div>队长：{{ team.leader.username }}</div>
+    <div>俱乐部logo:<img src="{{ team.avatar_url }}"/></div>
+    <div>电话：{{ team.phone }}</div>
+    <div>团队类型：{{ team.classify_type }}</div>
+    <div>资质审核材料:
+    {% if team.document %}<img src="{{ team.document_url }}" class="img-responsive"/>{% endif %}</div>
+    <div>介绍：{{ team.description }}</div>
+    {% if not team.approved %}
+    <div>审核：
+        <a class="btn btn-default" href="{{ url_for('admin.approve_team', id=team.id) }}">审核通过</a>
+    </div>
+    <div>{{ wtf.quick_form(form) }}</div>
+    {% endif %}
+    <div>
+
+    {% if team.disabled %}
+        <a href="{{ url_for('admin.unlock_team', id=team.id) }}" class="btn btn-default">解封</a>
+    {% else %}
+        <a href="{{ url_for('admin.lock_team', id=team.id) }}" class="btn btn-warning">封号</a>
+    {% endif %}
+    </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+<div class="row">
+    {% for team in collection %}
+    <div class="col-sm-4 text-center square_list">
+    <a href="{{ url_for('team.team_index', id=team.id) }}">
+        <div class="square">
+        {% if team.avatar %}
+            <img src="{{ team.avatar_url }}" title="team icon" class="avatar"  />
+        {% else %}
+            <img class="avatar"  src="{{ url_for('static', filename='images/avatar_team/default.jpg') }}"/>
+        {% endif %}
+        </div>
+
+        <p>{{ team.name }}</p>
+    </a>
+    </div>
+    {% endfor %}
+</div>

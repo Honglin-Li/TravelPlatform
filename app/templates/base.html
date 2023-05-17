@@ -1,0 +1,93 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{{ moment.lang('zh-CN') }}
+    <script>
+    $(document).ready(function(){
+        $(".delete").click(function(event){
+            if(!confirm('是否确认删除？')) {
+                event.preventDefault();}
+        });
+    });
+
+    </script>
+{% endblock %}
+
+{% block title %}小猫游园--南太行户外运动俱乐部{% endblock %}
+
+{% block head %}
+{{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/base.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/common.css') }}" />
+    <link rel="icon" href="{{ url_for('static',filename='images/favicon.ico') }}" type="image/x-icon" />
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.ico') }}" type="image/x-icon"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+ {% endblock %}
+
+
+{% block content %}
+<header role="banner">
+
+    <!--logo-->
+{#  nav.top_nav.render()  #}
+{% include 'include/_nav.html' %}
+
+    <!--顶部固定导航-->
+    <!--<nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">小猫游园</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">出行</a> </li>
+                <li><a href="#"></a>社区</li>
+                <li><a href="#"></a>商城</li>
+                <li><a href="#"></a>住宿</li>
+                <li><a href="#"></a>保险</li>
+            </ul>
+        </div>
+    </nav>-->
+</header>
+
+
+
+<main role="main">
+
+
+    <!--flash-->
+        {%  for msg in get_flashed_messages() %}
+            <div class="alert alert-warning">
+            <button type = 'button' class="close" data-dismiss="alert">&times;</button>
+            {{ msg }}
+            </div>
+        {% endfor %}
+
+    <!--子内容块-->
+        {% block page_content  %}{% endblock %}
+{# 百度分享 #}
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":["qzone","tsina","weixin","copy"],"bdPic":"","bdStyle":"1","bdSize":"24"},"slide":{"type":"slide","bdImg":"0","bdPos":"right","bdTop":"100"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+</main>
+
+<footer role="contentinfo">
+<!--底部固定导航-->
+<div class="row">
+    <div class="col-sm-offset-1 col-sm-10">
+
+    <div class="clearfix"></div>
+        <div class="copyright top-space-20">
+            Copyright &copy; 2013-2018
+            <strong><a href="//www.catyy.net/" target="_blank">小猫游园</a></strong>&nbsp;
+            <strong><a href="//www.catyy.net/" target="_blank">catyy.net</a></strong>
+            All Rights Reserved. 备案号：豫ICP备18026759号
+        </div>
+    </div>
+</div>
+</footer>
+{% endblock %}

@@ -1,0 +1,27 @@
+{# 使用需要设置(set)admin和urlpoint变量值,传入collection #}
+
+<div class="outdoor">
+            {% for t in collection %}
+            {# 户外分类项 #}
+            <div class="text-center thumbnail outdoor-item">
+            <a href="{{ url_for(urlpoint, id=t.id) }}">
+                <img src="{{ t.image_url }}" title="{{ t.name }}" class="img-responsive" />
+                <p class="title">{{ t.name }}</p>
+            </a>
+
+            {# 管理框 #}
+            {% if admin %}
+            <p>
+                <a href="{{ url_for('admin.edit_outdoor_type', id=t.id) }}" class="btn btn-primary">编辑</a>
+                {% if t.disabled %}
+                    <a href="{{ url_for('admin.show_outdoor', id=t.id) }}" class="btn btn-danger">显示</a>
+                {% else %}
+                    <a href="{{ url_for('admin.disable_outdoor', id=t.id) }}" class="btn btn-warning">禁用</a>
+                {% endif %}
+
+            </p>
+            {% endif %}
+            </div>
+            {% endfor %}
+</div>
+<div class="clearfix"></div>

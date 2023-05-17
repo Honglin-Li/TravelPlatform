@@ -1,0 +1,5 @@
+{% macro render_team_avatar(team) %}
+     <a href="{{ url_for('team.team_index', id=team.id) }}" title="点击头像进入团队首页">
+        <img class="img-circle img-responsive"  src="{{ team.avatar_url }}"/>
+    </a>
+{% endmacro %}

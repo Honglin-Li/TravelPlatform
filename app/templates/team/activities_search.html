@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros/_activity_list.html" as act_list with context %}
+{% import "macros/_tools.html" as pager %}
+{% block title %}发现更多活动{% endblock %}
+{% block head %}
+{{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/team.css') }}" />
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+    <div class="col-sm-offset-1 col-sm-10">
+        <h1 class="top-space">发现更多活动</h1>
+    {# 搜索选项 #}
+
+    <form action="" method="post" class="form-horizontal" role="form">
+    {{ form.hidden_tag() }}
+    <table class="table vertical-center">
+      <tbody>
+        <tr class="active">
+          <td class="highlight">搜索关键字</td>
+          <td><div class="col-sm-6">
+                    {{ form.keyword(class_='form-control') }}
+                </div>
+                <div class="col-sm-2">
+                    {{ form.submit(class_='btn btn-warning') }}
+                </div>
+          </td>
+        </tr>
+        <tr class="warning">
+          <td class="highlight">活动类型</td>
+          <td>{{ form.outdoor(class_='radio-list-inline') }}</td>
+        </tr>
+        <tr class="active">
+          <td class="highlight">出行天数</td>
+          <td>{{ form.days(class_='radio-list-inline') }}</td>
+        </tr>
+        <tr class="warning">
+          <td class="highlight">排序类型</td>
+          <td>{{ form.sort(class_='radio-list-inline') }}</td>
+        </tr>
+      </tbody>
+    </table>
+    </form>
+
+        {# 活动列表 #}
+        {% if activities %}
+        {{ act_list.render_activity_list_horizontal(activities) }}
+        {% else %}
+        <div>当前搜索条件下没有找到任何活动</div>
+        {% endif %}
+        <div class="clearfix"> </div>
+    {{ pager.render_pagination(pagination, 'team.activities_search') }}
+    </div>
+    </div>
+
+{% endblock %}

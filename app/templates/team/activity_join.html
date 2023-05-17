@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros/_form_tools.html" as form_tools %}
+{% block title %}报名{% endblock %}
+
+{% block page_content %}
+ <div class="row">
+    <div class="col-sm-offset-2 col-sm-8">
+         <div class="page-header">
+        <h3>添加出行人信息</h3>
+    </div>
+    <div>
+        <form action="" method="POST" class="form form-horizontal radio-list-inline" role="form">
+        {{ form.hidden_tag() }}
+            <div class="info-box">
+                <h3>添加出行人</h3>
+            <p class="highlight">在联系人列表中勾选要出行的出行人，如果此次出行人不在列表中，可以点击添加出行人添加。</p>
+            <p>如果你需要编辑出行人，请先<a href="{{ url_for('user.modify_contacts') }}">点击这里编辑联系人</a>
+            您也可以在您个人主页选择编辑常用出行人信息</p>
+            <div class="form-group">
+                {{ form.contact_source.label }}
+                {{ form.contact_source() }}
+            </div>
+            {% if form.child_count %}
+                <div class="form-group">
+                {{ form.child_count.label }}
+                {{ form.child_count() }}
+            </div>
+            {% endif %}
+            <a href="#team_join" class="btn btn-default" data-toggle="modal" data-target="#add_contact">
+               <span class="glyphicon glyphicon-plus"></span> 添加出行人 </a>
+            </div>
+            <div class="info-box">
+            <h3>填写报名信息</h3>
+            <div class="form-group top-space-20">
+            {{ form.solution.label }}
+            {{ form.solution() }}
+            </div>
+            <div class="form-group">
+                {{ form.comment.label }}
+                {{ form.comment() }}
+                {{ form_tools.render_error(form.comment.errors) }}
+            </div>
+            </div>
+            {{ form.submit() }}
+        </form>
+    </div>
+    </div>
+</div>
+    <!--  添加出行人的模态框（Modal） -->
+    <div class="modal fade" id="add_contact" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">添加出行人</h4>
+                </div>
+                <div class="modal-body">
+                    {{ wtf.quick_form(contact_form) }}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+{% endblock %}

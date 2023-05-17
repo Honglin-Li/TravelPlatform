@@ -1,0 +1,7 @@
+{% macro render_error(errors) %}
+     {% if errors %}
+         {% for e in errors %}
+              <p class="help-block">{{ e }}</p>
+         {% endfor %}
+     {% endif %}
+{% endmacro %}

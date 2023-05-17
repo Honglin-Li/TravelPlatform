@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros/_user_avatar.html" as avatar_macros %}
+{% block title %}众筹旅游{% endblock %}
+
+{% block page_content %}
+<div class="well">
+{# 众筹盒子 #}
+<div class="row">
+    <div class="col-sm-3">
+        {{ avatar_macros.render_user_avatar(join.user) }}
+    </div>
+    <div class="col-sm-9">
+        {{ join.crowd_funding_text }}
+        <p><a href="#">分享链接，让朋友帮我集资</a></p>
+    </div>
+</div>
+<div>
+    <div class="progress progress-striped">
+    <div class="progress-bar progress-bar-warning" role="progressbar"
+         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+         style="width: {{ percentage }}%;">
+        <span class="sr-only">{{ percentage }}% 完成</span>
+    </div>
+    </div>
+    <span class="text-orange">{{ join.crowd_funding_number }}</span>人支持了
+    <span class="text-orange">{{ join.crowd_funding_amount }}</span>元，
+    众筹目标{{ join.price }}
+    <a class="btn btn-warning" href="{{ url_for('team.crowd_funding_support',id=join.id) }}">我要支持</a>
+</div>
+</div>
+{# 支持列表 #}
+{% if join.supports_by_money %}
+<ul class="list-group">
+    {% for support in join.supports_by_money %}
+        <li class="list-group-item">
+        <div class="row">
+            <div class="col-sm-3">
+                {{ avatar_macros.render_user_avatar(support.user) }}
+            </div>
+            <div class="col-sm-9">
+                <p>支持了<span class="text-orange">{{ support.money }}</span>元 </p>
+                <p class="well">{{ support.text }}</p>
+            </div>
+        </div>
+        </li>
+    {% endfor %}
+</ul>
+{% else %}
+<div>
+    啊哦~还没有人支持它，快来支持它
+</div>
+{% endif %}
+
+
+
+{% endblock %}

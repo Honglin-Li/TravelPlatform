@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros/_star_picker.html" as macros %}
+{% import "macros/_user_panel.html" as user_macros %}
+{% import "macros/_user_avatar.html" as avatar_macros %}
+{% import "macros/_tools.html" as tools %}
+{% block title %}【出行】{{ activity.team.name }}-{{ activity.name }}{% endblock %}
+{% block head %}
+{{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/post.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/team.css') }}" />
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+    <div class="col-sm-offset-1 col-sm-10">
+
+        <div class="activity">
+        <h1 class="activity-title">{{ activity.name }}</h1>
+
+        <div class="row">
+        {# 左侧活动封面 #}
+            <div class="col-sm-7">
+                <div class="thumbnail">
+                <div class="activity-cover">
+                    <img src="{{ activity.cover_url }}" title="活动封面" class="img-responsive"/>
+                </div>
+                </div>
+            </div>
+
+        {# 右侧活动明细框 #}
+            <div class="col-sm-5">
+                <div class="activity-details card-shadow card-shadow-text">
+                <div class=" post-team">
+                    <a href="{{ url_for('team.team_index', id=activity.belong_to_team) }}" class="team-icon">
+                        <span>{{ activity.team.name }}</span>
+                    </a>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <span class="post-text">强度</span>
+                        {{ macros.render_star(activity.intensity_index) }}
+                    </div>
+                    <div class="right">
+                        <span class="post-text">风景</span>
+                        {{ macros.render_star(activity.landscape_index) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <span class="post-text">集合地：</span>{{ activity.rally_site }}
+                    </div>
+                    <div class="right">
+                        <span class="post-text">目的地：</span>{{ activity.destination }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <div><span class="post-text">开始日期：</span>{{ moment(activity.start_date).format('L') }}</div>
+                    </div>
+                    <div class="right">
+                        <div><span class="post-text">结束日期：</span>{{ moment(activity.end_date).format('L') }}</div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <span class="price">
+                    {{ activity.price }}</span>
+                        {% if activity.child_price %}
+                        <span class="child_price">
+                        <span class="highlight">儿童价</span> {{ activity.child_price }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="right">
+                      <img src="{{ url_for('static', filename='images/icons/phone.png') }}" title="咨询电话"/>
+                      <span>{{ activity.phone }}</span>
+                     </div>
+                </div>
+
+                <div class="post-text">
+                    <div><span class="label label-default">参与人数：{{ activity.member_count }}</span> /
+                    <span class="label label-default">报名上限：{% if activity.maximum %}{{ activity.maximum }}
+                {% else %}不限人数{% endif %}</span></div>
+                     {% if not activity.is_following(current_user) %}
+                     <a href="{{ url_for('team.follow', id=activity.id) }}" class="btn btn-info">
+                     关注活动（{{ activity.follow_count }}人已关注）</a>
+                     {% else %}
+                        <span class="label label-warning">{{ activity.follow_count }}人已关注</span>
+                      {% endif %}
+                      | <span class="label label-warning">阅读量：{{ activity.view_count }}</span> |
+
+                 </div>
+                </div>
+            {# ---------报名-------- #}
+
+                            {% if activity.past %}
+                            <div class="card-shadow card-shadow-text signup">
+                                <a href="#" class="btn btn-default disabled">活动已结束</a>
+                            </div>
+                            {% elif activity.joined(current_user) %}
+                                <div class="card-shadow card-shadow-text signup">
+                                {% if activity.paid(current_user) %}
+                                    <a href="#" class="btn btn-default disabled">您已报名</a>
+                                 {% else %}
+                                    <a href="{{ url_for('team.activity_confirm', id=activity.unpaid_id) }}" class="btn btn-success">您已报名,去付款</a>
+                                 {% endif %}
+                                </div>
+                            {% else %}
+                                {% if activity.full %}
+                                    <div class="card-shadow card-shadow-text signup">
+                                        <a href="#" class="btn btn-default">参与人数已达上限，不能报名了哦</a>
+                                    </div>
+                                {% else %}
+                                    {# 报名 #}
+                                    <div class="card-shadow card-shadow-text signup">
+                                    {% if activity.register(Registration_Way.PERSION)  %}
+                                        <a id="person_join" href="{{ url_for('team.activity_join', id=activity.id) }}" class="btn btn-warning">个人报名</a>
+                                    {% endif %}
+                                    {% if activity.register(Registration_Way.TEAM) %}
+                                        <a href="#team_join" class="btn btn-info" data-toggle="modal" data-target="#team_join">
+                                            团队报名</a>
+                                    {% endif %}
+                                    </div>
+
+                                    {% if activity.register(Registration_Way.VOLUNTEER)  %}
+                                        <div class="card-shadow card-shadow-text signup">
+                                        <span class="highlight">选择志愿者类型：</span>
+                                        <select name="volunteer_type" id="volunteer_type" class="form-control inline-input">
+                                            {% for k in VolunteerType %}
+                                                <option value="{{ k }}">{{ VolunteerType[k] }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <a id="volunteer_join" href="{{ url_for('team.activity_join', id= activity.id) }}" class="btn btn-success">志愿者报名</a>
+                                        </div>
+                                    {% endif %}
+                                 {% endif %}
+                            {% endif %}
+
+            {% if not activity.past and activity.team.is_admin(current_user) %}
+            <div class="well">
+                    <h4>管理活动</h4>
+                    <a href="{{ url_for('team.edit_activity', id= activity.id) }}" class="btn btn-primary">修改活动</a>
+                    <a href="{{ url_for('team.activity_add_sln', id= activity.id) }}" class="btn btn-primary">修改活动方案</a>
+                    <a href="{{ url_for('team.delete_activity', id= activity.id) }}" class="btn btn-primary delete">删除活动</a>
+                    <a href="{{ url_for('team.gene_qrcode', id= activity.id) }}" class="btn btn-default">重新生成活动二维码</a>
+                    <a href="{{ url_for('team.activity_join_details', id= activity.id) }}" class="btn btn-default">查看报名情况</a>
+            </div>
+            {% endif %}
+            {% if current_user.is_admin %}
+            <a href="{{ url_for('team.activity_join_details', id= activity.id) }}" class="btn btn-default">查看报名情况</a>
+            {% endif %}
+            </div>
+
+        </div>
+    {# 标签页面板 #}
+         <ul class="nav nav-tabs" id="myTab">
+             <li class="active">
+                 <a href="#introduce" data-toggle="tab">活动介绍</a>
+             </li>
+             <li>
+                 <a href="#join" data-toggle="tab">出行人员</a>
+             </li>
+             <li>
+                 <a href="#ask" data-toggle="tab">提问</a>
+             </li>
+         </ul>
+
+        <div id="myTabContent" class="tab-content tabs-panel">
+            <div id="introduce" class="tab-pane active fade in">
+                <div class="post" >{{ activity.introduce | safe }}</div>
+                {% if solutions %}
+                    <h3>有以下几个活动行程方案可以选择</h3>
+                    {% include 'include/_activity_solutions.html' %}
+                {% endif %}
+            </div>
+
+            <div id="join" class="tab-pane fade list-avatar">
+                {{ user_macros.render_user_panel(activity.users_joined) }}
+            </div>
+
+            <div id="ask" class="tab-pane fade">
+                {{ wtf.quick_form(form) }}
+
+                <ul class="list-group">
+                    {% for question in activity.counsel_reverse %}
+                    <li class="list-group-item row">
+                        <div class="col-sm-3">
+                            {{ avatar_macros.render_user_avatar(question.user) }}
+                        </div>
+                        <div class="col-sm-9 well">
+                            {{ question.question }}
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+</div>
+</div>
+
+    {# 模态分享 #}
+    {{ tools.render_share(activity) }}
+    <!-- 团队报名的模态框（Modal） -->
+    <div class="modal fade" id="team_join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">关于团队报名</h4>
+                </div>
+                <div class="modal-body">
+                    <p>选择团队报名：是以您的团队进行报名，填写您的个人信息成功报名后，会生成专属于您团队的报名页面，
+                        拥有专属的二维码图片，
+                    同时团队报名的活动也会出现在您的团队首页。
+                    团队成员可以在该页面进行报名，您可以在活动页面看到报名情况。</p>
+                    <a href="{{ url_for('team.activity_join_team', id= activity.id) }}" class="btn btn-info" >报名</a>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 倒到南太行的模态框（Modal） -->
+
+    <div class="modal fade" id="nth" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">公告</h4>
+                </div>
+                <div class="modal-body">
+                    {% if activity.id==1 %}
+                    <p>详情请咨询新乡南太行旅游有限公司</p>
+                    {% elif activity.id==16 or activity.id==17 %}
+                    <p>由于天气原因，该活动已取消</p>
+                    {% endif %}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+    {% if activity.id==1 or activity.id==16 or activity.id==17 %}
+    <script>
+        $(function(){
+        $("#volunteer_join").click(function(event){
+            var volunteer = $("#volunteer_type").val();
+            $("#volunteer_join").attr("href",$("#volunteer_join").attr("href") +"?volunteer="+volunteer);
+        });
+        $('#nth').modal()
+    });
+    </script>
+    {% endif %}
+{% endblock %}

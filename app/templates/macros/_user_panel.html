@@ -1,0 +1,34 @@
+{% macro render_user_panel(user_list) %}
+    <div>
+    <ul class="list-inline list-unstyled user-panel-default">
+    {% for user in user_list %}
+        <li class="list-item">
+         <a href="{{ url_for('user.profile', id=user.id) }}" title="{{ user.usernamee }}">
+
+            <img src="{{ user.avatar_url }}" title="点击进入用户主页" class="img-responsive thumbnail"  />
+            <p>{{ user.username }}</p>
+
+        </a>
+        </li>
+    {% endfor %}
+    </ul>
+    </div>
+{% endmacro %}
+
+{% macro render_user_panel_timestamp(user_list) %}
+    <div>
+    <ul class="list-inline list-unstyled user-panel-default">
+    {% for user in user_list %}
+        <li class="text-center">
+         <a href="{{ url_for('user.profile', id=user['user'].id) }}" title="{{ user['user'].usernamee }}">
+
+            <img src="{{ user['user'].avatar_url }}" title="点击进入用户主页" class="img-responsive img-circle"  />
+            <p>{{ user['user'].username }}</p>
+        </a>
+        <p>关注时间：</p>
+        <p>{{ moment(user['timestamp']).format('YYYY年M月D日') }}</p>
+        </li>
+    {% endfor %}
+    </ul>
+    </div>
+{% endmacro %}

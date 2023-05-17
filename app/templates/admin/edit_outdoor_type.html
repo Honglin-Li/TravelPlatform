@@ -1,0 +1,20 @@
+{% extends "admin_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+{% block admin_title %}
+管理户外分类
+{% endblock %}
+
+{% block admin_content %}
+    {# type list & edit +　禁用
+    显示模板根据admin参数决定是否显示编辑条#}
+    {% set admin=True %}
+    {% set urlpoint = 'admin.edit_outdoor_type' %}
+    {% include 'include/_outdoors_type_list.html' %}
+
+    {# new type #}
+    <div>
+        {{ wtf.quick_form(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% import "macros/_team_avatar.html" as macros %}
+{% macro render_team_details_cube(team) %}
+<div class="card-shadow">
+        <div class="left">
+            {{ macros.render_team_avatar(team) }}
+        </div>
+
+        <div class="right card-shadow-text">
+            <p><a class="card-square-title" href="{{ url_for('team.team_index', id=team.id) }}"> {{ team.name }}</a></p>
+            <p class="card-square-body">{{ team.description }}</p>
+            <a href="{{ url_for('team.team_index', id=team.id) }}" >活动:
+            <span class="badge"> {{ team.activity_count }}</span></a> |
+            <a href="{{ url_for('team.members', id=team.id) }}">队员:
+                <span class="badge">{{ team.member_count }}</span></a> |
+            <span class="card-square-details">{{ moment(team.timestamp).fromNow() }}成立</span>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_team_vertical(team) %}
+        <div class="card-shadow text-center">
+            {{ macros.render_team_avatar(team) }}
+
+            <p><a class="highlight" href="{{ url_for('team.team_index', id=team.id) }}"> {{ team.name }}</a></p>
+            <p class="card-square-body">{{ team.description }}</p>
+            <a href="{{ url_for('team.team_index', id=team.id) }}" >活动:
+            <span class="badge"> {{ team.activity_count }}</span></a> |
+            <a href="{{ url_for('team.members', id=team.id) }}">队员:
+                <span class="badge">{{ team.member_count }}</span></a> |
+            <span class="card-square-details">{{ moment(team.timestamp).fromNow() }}成立</span>
+        </div>
+{% endmacro %}
+
+{% macro render_team_list_simple(team_list) %}
+<ul class="list-unstyled list-inline team_cube_simple">
+    {% for item in team_list %}
+        <li class="list-item">
+            <a href="{{ url_for('team.team_index', id=item.id) }}" title="点击头像进入团队首页">
+                <img class="img-circle img-responsive"  src="{{ item.avatar_url }}"/>
+                <h5>{{ item.name }}</h5>
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endmacro %}
+
+
+{% macro render_team_list_admin(team_list) %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>序号</th>
+      <th>俱乐部名称</th>
+      <th>领队</th>
+      <th>创建时间</th>
+      <th>管理</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for team in team_list %}
+    <tr>
+      <td>{{ loop.index }}</td>
+      <td><a href="{{ url_for('admin.team', id=team.id) }}">{{ team.name }}</a></td>
+      <td><a href="{{ url_for('user.profile', id=team.leader_id) }}">
+          {{ team.leader.username }}
+      </a> </td>
+      <td>{{ moment(team.timestamp).fromNow() }}</td>
+      <td>
+          {% if not team.approved %}
+            待审批 |
+          {% endif %}
+            {% if team.disabled %}
+                <a href="{{ url_for('admin.unlock_team', id=team.id) }}" class="btn btn-default">解封</a>
+            {% else %}
+                <a href="{{ url_for('admin.lock_team', id=team.id) }}" class="btn btn-warning">封号</a>
+            {% endif %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endmacro %}

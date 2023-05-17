@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "macros/_star_picker.html" as macros %}
+{% block title %}关注的活动列表{% endblock %}
+
+{% block page_content %}
+{% if activities %}
+    {% include "include/_activity_list.html" %}
+{% else %}
+    <div class="well">
+    它还没有关注任何活动~
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}管理页面{% endblock %}
+{% block head %}
+{{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/profile.css') }}" />
+{% endblock %}
+{% block page_content %}
+    {# 子类内容块 #}
+    <div class="row top-space">
+        <div class="col-sm-offset-1 col-sm-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">
+                    {% block admin_title %}
+
+                    {% endblock %}
+                </h2>
+            </div>
+            <div class="panel-body">
+            {% block admin_content %}
+
+            {% endblock %}
+            </div>
+        </div>
+        </div>
+        <div class="col-sm-3">
+            {# 团队活动列表组 #}
+         <ul class="list-group">
+             <li class="list-group-item">
+                <a href="{{ url_for('admin.demands') }}">来自赞助商的需求</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('admin.edit_outdoor_type') }}">管理户外分类</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('admin.users') }}">管理用户</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('admin.unapprove_team_list') }}">待审核的俱乐部</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('admin.locked_team_list') }}">封号的俱乐部</a>
+            </li>
+             <li class="list-group-item">
+                <a href="{{ url_for('admin.activities') }}">置顶活动</a>
+            </li>
+         </ul>
+        </div>
+    </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block title %}登陆{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+        <div class="page-header">
+            <h3>登陆</h3>
+         </div>
+        <div>
+             {{ wtf.quick_form(form, button_map={'submit': 'success'}) }}
+         </div>
+    <button class="top-space-20 btn btn-default" data-toggle="modal" data-target="#forgetPwd">
+         忘记密码？
+    </button>
+        <a href="{{ url_for('auth.register')}}" class="btn btn-default top-space-20">注册</a>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="forgetPwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">选择验证方式</h4>
+                </div>
+                <div class="modal-body">
+                    {{ wtf.quick_form(form2) }}
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    </div>
+    </div>
+
+
+{% endblock %}

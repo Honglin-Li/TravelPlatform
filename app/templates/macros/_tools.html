@@ -1,0 +1,44 @@
+{% macro render_pagination(pagination,endpoint) %}
+    <ul class="pagination">
+    <li {% if not pagination.has_prev %} class="disabled" {% endif %}>
+        <a href="{% if pagination.has_prev %}{{ url_for(endpoint,page=pagination.page - 1, **kwargs) }}
+        {% else %}#{% endif %}">&laquo;</a>
+    </li>
+
+    {% for p in pagination.iter_pages() %}
+    {% if p %}
+        {% if p == pagination.page %}
+        <li class="active"><a href="#">{{ p }}</a> </li>
+        {% else %}
+        <li><a href="{{ url_for(endpoint, page=p, **kwargs) }}">{{ p }}</a> </li>
+        {% endif %}
+    {%  else %}
+        <li class="disabled"><a hre="#">&hellip;</a></li>
+    {% endif %}
+    {% endfor %}
+
+    <li {% if not pagination.has_next %} class="disabled" {% endif %}>
+        <a href="{% if pagination.has_next %}{{ url_for(endpoint,page=pagination.page + 1, **kwargs) }}{% else %}#{% endif %}">&raquo;</a>
+    </li>
+    </ul>
+{% endmacro %}
+
+{% macro render_share(item) %}
+    <button class="fix-position" data-toggle="modal" data-target="#shareImg">
+        <span class="glyphicon glyphicon-picture"></span> 活动二维码
+    </button>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="shareImg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">分享带二维码的封面图片</h4>
+                </div>
+                <div class="modal-body">
+                    <img src="{{ item.qrcode_url }}" title="保存图片并分享给朋友" class="img-responsive" />
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+{% endmacro %}
