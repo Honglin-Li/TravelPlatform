@@ -1,0 +1,53 @@
+/*活动列表*/
+.activity-item h3 {
+    line-height: 1em;
+}
+.activity-item h3 a {
+    color:olivedrab;
+}
+.activity-list-horizontal {
+    list-style: none;
+    padding: 0;
+}
+.activity-list-horizontal li {
+    margin: 10px;
+}
+
+@media (min-width: 768px) {
+    .activity-list-horizontal li {
+        width:31%;
+        float: left;
+    }
+}
+.activity-details {
+    font-size: 18px;
+    line-height: 1.8em;
+}
+.activity-details .left, .activity-details .right {
+    width:42%;
+    margin: 5px 2%;
+    display: inline-block;
+}
+
+/*team-detail*/
+.team-icon {
+    background: url('../images/icons/team.png') no-repeat;
+    padding: 5px 0 5px 35px;
+    line-height: 30px;
+}
+.team_cube_simple li {
+    width:100px;
+}
+.team_cube_simple a h4 {
+    color:olivedrab;
+    font-size:12px;
+    width:100%;
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}
+
+/*细节*/
+.signup a {
+    margin-left: 10px;
+}

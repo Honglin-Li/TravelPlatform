@@ -1,0 +1,32 @@
+/*个人主页----TODO添加手机端样式*/
+.user-cover {
+    background:url(../images/cover_user/bg-user-long.jpg) no-repeat;
+    background-size:100% 300px;
+}
+.team-cover {
+    background:url(../images/cover_team/bg-team-long.jpg) no-repeat;
+    background-size:100% 300px;
+}
+.profile-avatar {
+    height: 350px;
+}
+.profile-avatar img {
+    border:white 5px solid;
+    margin-top:150px;
+}
+.profile-name {
+    font-size: 24px;
+}
+.profile-description {
+    font-size: 18px;
+}
+.profile-bar a {
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+.user-panel-default li {
+    width: 18%;
+    padding:5px;
+}
+

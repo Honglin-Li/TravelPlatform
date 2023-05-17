@@ -1,0 +1,306 @@
+
+.card-shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding:15px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.card-shadow div.box {
+    margin:10px;
+}
+.card-shadow h3 {
+    color:#737373;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+.card-shadow-text {
+    text-align: left;
+}
+.card-shadow .left {
+    width:30%;
+    display: inline-block;
+    margin-right: 5%;
+}
+.card-shadow .right {
+    width:60%;
+    display: inline-block;
+}
+/*宝丽来效果的框！！！*/
+.polaroid {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+}
+.polaroid a:hover {
+    opacity: 0.7;
+}
+
+.polaroid-text {
+  padding: 10px 20px;
+}
+.card-shadow a {
+    display: inline-block;
+}
+
+.fix-position {
+    position: fixed;
+    right: 10px;
+    bottom: 30px;
+    font-size:20px;
+    border: solid 1px lightseagreen;
+    border-radius: 10px;
+    padding:7px 13px;
+    background-color: lightseagreen;
+    color:whitesmoke;
+
+}
+.fix-position a {
+    color:whitesmoke;
+}
+.share {
+    font-size:20px;
+    border: solid 1px lightseagreen;
+    border-radius: 10px;
+    padding:7px 13px;
+    background-color: lightseagreen;
+}
+.img-carousel {
+    min-width:100%;
+    max-height: 600px;
+}
+/*户外分类*/
+.outdoor {
+    width:100%;
+}
+.outdoor-item {
+    float:left;
+    width:20%;
+    position: relative;
+}
+.outdoor-item a {
+
+}
+.outdoor-item .title {
+    font-siza:16px;
+    font-weight: bold;
+    color:white;
+    position:absolute;
+    top:35%;
+    left:35%;
+}
+@media (min-width: 768px) {
+    .outdoor-item .title {
+        font-size:30px;
+    }
+}
+/*文字*/
+.text-border {
+     text-shadow:-1px 0 black,
+                0 1px black,
+                1px 0 black,
+                0 -1px black;
+}
+/*banner*/
+.banner {
+    height: 120px;
+    line-height: 120px;
+    color:whitesmoke;/*统一替换标题颜色*/
+    font-weight: bold;
+    letter-spacing:0.5em;
+}
+.banner-long {
+    background:url(../images/bannar-both-long.gif) no-repeat center;
+}
+.banner-middle {
+    background:url(../images/bannar-long.gif) no-repeat;
+}
+.banner-small {
+    background: url(../images/logo-48.gif) no-repeat left center;
+    padding-left:60px;
+}
+/*panel=home*/
+.catyy-panel h1 {
+    font-size:30px;
+    color: dimgray;
+    line-height: 1.5em;
+    letter-spacing: 0.3em;
+}
+/*panel 内的展示细节的列表样式*/
+.panel-detail-list {
+    font-size: 18px;
+    line-height: 1.6em;
+}
+.panel-detail-list li {
+    display: block;
+    height: 2.2em;
+}
+.panel-detail-list span.list-span {
+    color:dodgerblue;
+    display:inline-block;
+    width:6em;
+    margin-right:1em;
+    text-align: right;
+}
+/*名片样式的方块*/
+.card-square {
+
+}
+.card-square-title {
+    font-size: 20px;
+    color: dodgerblue;
+    background: url(../images/icons/flower.png) no-repeat;
+    padding-left:35px;
+}
+.card-square-details {
+    font-size: 12px;
+    color: lightskyblue;
+}
+/*解决一些布局上的不和谐*/
+main {
+    margin-top:-20px;
+}
+.top-space {
+    margin-top: 50px;
+}
+.bottom-space {
+    margin-bottom: 50px;
+}
+.top-space-20 {
+    margin-top: 20px;
+}
+
+pre {
+    white-space: pre-wrap!important;
+    word-wrap: break-word!important;
+    *white-space:normal!important;
+}
+/*标签样式导航*/
+.tabs-panel {
+    border-left: solid 1px gainsboro;
+    border-right: solid 1px gainsboro;
+    border-bottom: solid 1px gainsboro;
+    padding: 20px;
+}
+/*form表单*/
+input.inline-input, select.inline-input {
+    width:150px;
+    display:inline-block;
+}
+.no-padding-top {
+    padding-top:0;
+    margin-top:0;
+}
+
+form {
+    margin:0 20px;
+}
+.radio-list-inline, .radio-list-inline ul {
+    list-style: none;
+    padding:0;
+}
+.radio-list-inline li {
+    float: left;
+    margin-right: 2em;
+}
+.info-box {
+    border:solid 1px darkorange;
+    border-radius: 25px;
+    padding:30px;
+    margin:40px auto;
+}
+.info-box h3 {
+    padding:10px;
+    margin-top:-55px;
+    margin-left:20px;
+    background: white;
+    width: 7em;
+    color: darkorange;
+    text-align: center;
+}
+
+/*细节*/
+.highlight {
+    color: dodgerblue;
+    font-weight: bold;
+}
+.vertical-center td {
+    vertical-align: middle !important;
+}
+.list-item {
+    margin:7px;
+    text-align: center;
+}
+.list-item a {
+    font-size: 18px;
+}
+/*----------------复选框组-------------*/
+#registration_way, #travel_type {
+    list-style: none;
+}
+#registration_way li, #travel_type li {
+    display: inline-block;
+    margin-right: 20px;
+}
+/*----editor---------*/
+.post table {
+    width:80%;
+}
+.post td {
+    padding:10px;
+}
+.post img {
+    width:100%;
+}
+.post table, .post th, .post td {
+    border:solid 1px lightgray;
+}
+.marker {
+    background: yellow;
+}
+.price {
+    background: url(../images/icons/money.png) no-repeat;
+    padding:7px 7px 7px 40px;
+    font-size: 28px;
+    color:orangered;
+    font-weight:bold;
+}
+.child_price {
+    color:orangered;
+    font-weight: bold;
+}
+.separator {
+    margin:20px;
+    border-bottom:dotted 1px dodgerblue;
+}
+.nav-box {
+    position: absolute;
+    top:10px;
+    right:10px;
+    color:whitesmoke;
+}
+.nav-box a {
+    color:whitesmoke;
+}
+.invest {
+
+}
+.invest p {
+    font-size:18px;
+    line-height: 2em;
+}
+.invest .title {
+    color:dimgray;
+}
+.invest h1 {
+    text-align: center;
+}
+/*          成功失败------------------*/
+.success, .fail {
+    height: 64px;
+    background: url(../images/icons/success.png) no-repeat left;
+    font-size: 30px;
+    vertical-align: middle;
+    padding-left: 70px;
+}
+.fail {
+    background: url(../images/icons/fail.png) no-repeat left;
+}

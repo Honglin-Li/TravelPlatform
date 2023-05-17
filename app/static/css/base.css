@@ -1,0 +1,27 @@
+footer {
+    border-top: cornflowerblue 10px solid;
+    height: 100px;
+    background-color: lightgray;
+    margin-top:50px;
+}
+.copyright {
+    font-size: 14px;
+    text-align: center;
+
+}
+a:hover { text-decoration:none!important;}
+
+.banner-home {
+    height: 50px;
+	border-radius:10px;
+    background: -webkit-linear-gradient(#e6e6e6, #f7f7f7); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#e6e6e6, #f7f7f7); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#e6e6e6, #f7f7f7); /* Firefox 3.6 - 15 */
+    background: linear-gradient(#e6e6e6, #f7f7f7);
+    line-height: 50px;
+    text-align: center;
+    font-size: 24px;
+    color:#737373;
+    margin-bottom: 30px;
+}
+
